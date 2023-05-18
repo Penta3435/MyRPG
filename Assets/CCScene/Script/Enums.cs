@@ -11,3 +11,8 @@ public enum WeaponType
     Polearm = 5,
     Sword = 6,
 }
+
+public enum CharacterRol
+{
+
+}
