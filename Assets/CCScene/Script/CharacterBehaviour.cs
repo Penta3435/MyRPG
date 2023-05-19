@@ -1,127 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
 
 public class CharacterBehaviour : MonoBehaviour
 {
-    Animator animator;
+    [SerializeField] Animator animator;
+    [SerializeField] HandBehaviour rightHandBehaviour;
+    [SerializeField] HandBehaviour leftHandBehaviour;
+    [SerializeField] AbilityContainerBehaviour ability1ContainerBehaviour;
+    [SerializeField] AbilityContainerBehaviour ability2ContainerBehaviour;
 
-    //characterProperties
-    private Transform rightHand;
-    private Transform leftHand;
-    private Transform hability1Container;
-    private Transform hability2Container;
-    private WeaponData weaponData;
 
-    #region ACTION
+    Weapon weapon1Data;
+    Weapon weapon2Data;
+    Weapon meleeWeaponData;
 
-    #region character_container_behavour
-    //character
-    public void EquipCharacter(GameObject character)
-    {
-        //destroy all children
-        DestroyAllChildren(transform);
-
-        //instantiate character
-        var instantiatedCharacter = Instantiate(character, transform);
-        
-        //setup character data
-        CharacterData characterData = instantiatedCharacter.GetComponent<CharacterData>();
-        leftHand = characterData.leftHand;
-        rightHand = characterData.rightHand;
-        hability1Container = characterData.Hability1Container;
-        hability2Container = characterData.Hability2Container;
-        animator = characterData.characterAnimator;
-    }
-    public void UnequipCharacter()
-    {
-
-    }
-
-    #endregion
-
-    #region character_behaviour
-    //weapon
+    //weaponAtack
     public void Atack()
     {
-        weaponData.WeaponAtackMethod();
+        PlayAtackAnimation();
     }
     public void SwitchWeapon()
     {
-
+        rightHandBehaviour.SwitchWeapon();
+        leftHandBehaviour.SwitchWeapon();
     }
     public void EquipWeapon(GameObject weapon)
     {
-        DestroyAllChildren(rightHand);
-        UnsetWeaponAnimation();
+        rightHandBehaviour.EquipWeapon(weapon);
+        animator.DisableAllLayers();
 
-        var weaponInstance = Instantiate(weapon, rightHand);
 
-        weaponData = weaponInstance.GetComponent<WeaponData>();
-        SetWeaponAnimation(weaponData.weaponType);
+        SetWeaponAnimation(weapon.GetComponent<Weapon>().weaponType);
     }
-    public void UnEquipWeapon()
+    public void UnEquipWeapons(WeaponContainer weaponContainer)
     {
-
-        rightHand.DetachChildren();
-        leftHand.DetachChildren();
+        rightHandBehaviour.UnequipWeapon(weaponContainer);
     }
 
     //hability
     public void Hability1()
     {
-        
+        ability1ContainerBehaviour.UseAbility();
     }
     public void Hability2()
     {
-        
+        ability2ContainerBehaviour.UseAbility();
     }
-    public void EquipHability1(GameObject hability)
+    public void EquipHability1(GameObject ability)
     {
-
+        ability1ContainerBehaviour.EquipAbility(ability);
     }
-    public void EquipHability2(GameObject hability)
+    public void EquipHability2(GameObject ability)
     {
-
+        ability2ContainerBehaviour.EquipAbility(ability);
     }
     public void UnequipHability1()
     {
-
+        ability1ContainerBehaviour.UnequipAbility();
     }
     public void UnequipHability2()
     {
-
+        ability2ContainerBehaviour.UnequipAbility();
     }
-    #endregion
-
-    #endregion
 
 
-    #region ANIMATION
+
+    //animation
     void SetWeaponAnimation(WeaponType weaponType)
     {
         animator.SetLayerWeight((int)weaponType, 1);
     }
-    private void UnsetWeaponAnimation()
-    {
-        if (weaponData == null) return;
-        animator.SetLayerWeight((int)weaponData.weaponType, 0);
-    }
     public void PlayAtackAnimation()
     {
         animator.SetTrigger("Atack");
-    }
-    #endregion
-
-
-    //internal method
-    private void DestroyAllChildren(Transform parent)
-    {
-        if (parent.childCount != 0)
-        {
-            for (int childNum = 0; childNum < parent.childCount; childNum++)
-            {
-                Destroy(parent.GetChild(childNum).gameObject);
-            }
-        }
     }
 }

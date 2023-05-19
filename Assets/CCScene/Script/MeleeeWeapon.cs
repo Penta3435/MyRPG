@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeeWeapon : WeaponData
+public class MeleeeWeapon : Weapon
 {
     [SerializeField] BoxCollider weaponTrigger;
     public override void WeaponAtackMethod()

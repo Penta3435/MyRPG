@@ -11,11 +11,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] CharacterController cc;
-
     [SerializeField] PlayerInput pInput;
 
-    [SerializeField] CharacterBehaviour mainCharacterBehaviour;
-    [SerializeField] CharacterBehaviour companionBehaviour;
+    [SerializeField] CharacterContainerBehaviour mainCharacterBehaviour;
+    [SerializeField] CharacterContainerBehaviour companionBehaviour;
 
     [SerializeField] Transform mainCharacterContainer;
     [SerializeField] Transform companionContainer;
@@ -24,22 +23,22 @@ public class PlayerController : MonoBehaviour
     //internal properties
     private InputActionAsset iActionAsset;
 
-    private CharacterBehaviour currentCharacterBehaviour;
+    private CharacterContainerBehaviour currentCharacterContainerBehaviour;
 
 
     private void OnEnable()
     {
         iActionAsset = pInput.actions;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchCharacters").started += ChangeCharacters;
+        iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchWeapons").started += SwitchWeapon;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started += PlayerAtack;
     }
     private void Start()
     {
         SetupMainCharacter();
-        currentCharacterBehaviour = mainCharacterBehaviour;
+        currentCharacterContainerBehaviour = mainCharacterBehaviour;
         mainCharacterContainer.gameObject.SetActive(true);
         companionContainer.gameObject.SetActive(false);
-        EquipWeapon(defaultWeapon);
     }
 
     #region Update_Behaviours
@@ -102,24 +101,30 @@ public class PlayerController : MonoBehaviour
     //public for test
     public void EquipWeapon(GameObject weapon)
     {
-        currentCharacterBehaviour.EquipWeapon(weapon);
+        currentCharacterContainerBehaviour.EquipWeapon(weapon);
     }
-    void UnequipWeapon()
+    void UnequipWeapon(WeaponContainer weaponContainer)
     {
-
+        currentCharacterContainerBehaviour.UnEquipWeapons(weaponContainer);
     }
-
-
-
-
+    void SwitchWeapon(InputAction.CallbackContext ctx)
+    {
+        if(ctx.started) 
+        {
+            currentCharacterContainerBehaviour.SwitchWeapon();
+        }
+    }
     private void PlayerAtack(InputAction.CallbackContext ctx)
     {
         if(ctx.started == true)
         {
-            currentCharacterBehaviour.Atack();
-            currentCharacterBehaviour.PlayAtackAnimation();
+            currentCharacterContainerBehaviour.Atack();
         }
     }
+
+
+
+    //hability
     void Hability1()
     {
 
@@ -145,6 +150,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchCharacters").started -= ChangeCharacters;
+        iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchWeapons").started -= SwitchWeapon;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started -= PlayerAtack;
     }
 }
