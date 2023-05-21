@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7537653717135555898}
+  - component: {fileID: 394598050663594144}
   m_Layer: 0
   m_Name: Musket
   m_TagString: Untagged
@@ -32,6 +33,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &394598050663594144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8190092634066009119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb565f1f21eb4644a3fd340f1024950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animatorController: {fileID: 22100000, guid: 8c54d9b56496cde4391e5b9571463163, type: 2}
+  weaponType: 0
+  bulletPrefab: {fileID: 4395119769711690072, guid: 62c8d0d1d35e59545b4ee501fc54845e, type: 3}
 --- !u!1001 &4357499282125530713
 PrefabInstance:
   m_ObjectHideFlags: 0

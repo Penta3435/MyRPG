@@ -31,7 +31,8 @@ public class PlayerController : MonoBehaviour
         iActionAsset = pInput.actions;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchCharacters").started += ChangeCharacters;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchWeapons").started += SwitchWeapon;
-        iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started += PlayerAtack;
+        iActionAsset.FindActionMap("PlayerRunning").FindAction("EquipMelee").started += SwitchToMelee;
+        iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started += Atack;
     }
     private void Start()
     {
@@ -64,9 +65,10 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = iActionAsset.FindActionMap("PlayerRunning").FindAction("MousePosition").ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, layerMaskToRaycastHit))
+        Plane weaponHightPlane = new Plane(Vector3.up, new Vector3(0, currentCharacterContainerBehaviour.characterBehaviour.hand.position.y, 0));
+        if (weaponHightPlane.Raycast(ray, out float rayDistance))
         {
-            transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
+            transform.LookAt(new Vector3(ray.GetPoint(rayDistance).x, transform.position.y, ray.GetPoint(rayDistance).z));
         }
 
     }
@@ -114,7 +116,11 @@ public class PlayerController : MonoBehaviour
             currentCharacterContainerBehaviour.SwitchWeapon();
         }
     }
-    private void PlayerAtack(InputAction.CallbackContext ctx)
+    void SwitchToMelee(InputAction.CallbackContext ctx)
+    {
+        currentCharacterContainerBehaviour.SwitchToMelee();
+    }
+    private void Atack(InputAction.CallbackContext ctx)
     {
         if(ctx.started == true)
         {
@@ -151,6 +157,7 @@ public class PlayerController : MonoBehaviour
     {
         iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchCharacters").started -= ChangeCharacters;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchWeapons").started -= SwitchWeapon;
-        iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started -= PlayerAtack;
+        iActionAsset.FindActionMap("PlayerRunning").FindAction("EquipMelee").started -= SwitchToMelee;
+        iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started -= Atack;
     }
 }

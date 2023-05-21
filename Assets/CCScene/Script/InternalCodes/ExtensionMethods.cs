@@ -10,11 +10,4 @@ public static class ExtensionMethods{
             }
         }
     }
-    public static void DisableAllLayers(this Animator animator)
-    {
-        for(int numLayer = 1; numLayer < animator.layerCount; numLayer++)
-        {
-            animator.SetLayerWeight(numLayer, 0);
-        }
-    }
 }

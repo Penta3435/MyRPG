@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterContainerBehaviour : MonoBehaviour
 {
-    CharacterBehaviour characterBehaviour;
+    public CharacterBehaviour characterBehaviour;
 
     #region character_container_behavour
     //character
@@ -35,6 +35,10 @@ public class CharacterContainerBehaviour : MonoBehaviour
     public void SwitchWeapon()
     {
         characterBehaviour.SwitchWeapon();
+    }
+    public void SwitchToMelee()
+    {
+        characterBehaviour.SwitchToMelee();
     }
     public void EquipWeapon(GameObject weapon)
     {
