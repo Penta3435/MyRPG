@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatorController: {fileID: 9100000, guid: 67a108ce4f37c264ab47e561e87339c1, type: 2}
+  weaponType: 1

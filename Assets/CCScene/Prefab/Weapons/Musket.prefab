@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb565f1f21eb4644a3fd340f1024950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSprite: {fileID: 21300000, guid: 3b3edb1acc9564f4d8fed695eccbe7c9, type: 3}
   animatorController: {fileID: 22100000, guid: 8c54d9b56496cde4391e5b9571463163, type: 2}
   weaponType: 0
   bulletPrefab: {fileID: 4395119769711690072, guid: 62c8d0d1d35e59545b4ee501fc54845e, type: 3}

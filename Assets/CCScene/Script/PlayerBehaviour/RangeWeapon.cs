@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class RangeWeapon : Weapon
 {
-    [SerializeField] GameObject bulletPrefab;
+    [SerializeField]protected GameObject bulletPrefab;
 
-    public void Awake() {
-        WeaponAtack += () => Instantiate(bulletPrefab, transform.position, transform.rotation);
+    protected bool canAtack = true;
+    protected override void WeaponAtackMethod()
+    {
+        if (canAtack)
+        {
+            Instantiate(bulletPrefab, transform.position, transform.rotation);
+            canAtack = false;
+            Invoke("SetCanAtack", AnimatorController.animationClips[0].length / 2);
+        }
     }
+    protected virtual void SetCanAtack() => canAtack = true;
 }

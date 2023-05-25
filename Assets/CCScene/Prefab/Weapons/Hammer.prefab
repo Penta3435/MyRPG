@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9855c6aebf949184a857576d7ba46fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 3
+  weaponSprite: {fileID: 21300000, guid: 8c2c64cc644e4ae41b73f63330646f1b, type: 3}
   animatorController: {fileID: 22100000, guid: 543bcc13a72d8d041985c24cf710d8d3, type: 2}
+  weaponType: 2
   weaponTrigger: {fileID: 313220100800773328}
 --- !u!1001 &4129985749354836053
 PrefabInstance:

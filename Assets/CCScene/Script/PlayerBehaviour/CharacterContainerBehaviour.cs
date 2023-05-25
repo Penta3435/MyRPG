@@ -1,22 +1,25 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 
 public class CharacterContainerBehaviour : MonoBehaviour
 {
-    public CharacterBehaviour characterBehaviour;
+    public Character character;
+
+    GameObject characterCanvas;
 
     #region character_container_behavour
     //character
-    public void EquipCharacter(GameObject character)
+    public void EquipCharacter(GameObject character, Transform CharacterUICanvas)
     {
         //destroy all children
         transform.DestroyAllChildren();
 
         //instantiate character
-        var instantiatedCharacter = Instantiate(character, transform);
-        
-        //setup character data
-        characterBehaviour = instantiatedCharacter.GetComponent<CharacterBehaviour>();
+        this.character = Instantiate(character, transform).GetComponent<Character>();
+
+        this.character.CharacterUIParent = CharacterUICanvas;
+        this.character.gameObject.SetActive(true);
     }
     public void UnequipCharacter()
     {
@@ -30,49 +33,49 @@ public class CharacterContainerBehaviour : MonoBehaviour
     //weapon
     public void Atack()
     {
-        characterBehaviour.Atack();
+        character.Atack();
     }
     public void SwitchWeapon()
     {
-        characterBehaviour.SwitchWeapon();
+        character.SwitchWeapon();
     }
     public void SwitchToMelee()
     {
-        characterBehaviour.SwitchToMelee();
+        character.SwitchToMelee();
     }
     public void EquipWeapon(GameObject weapon)
     {
-        characterBehaviour.EquipWeapon(weapon);
+        character.EquipWeapon(weapon);
     }
     public void UnEquipWeapons(WeaponContainer weaponContainer)
     {
-        characterBehaviour.UnEquipWeapons(weaponContainer);
+        character.UnEquipWeapons(weaponContainer);
     }
 
     //hability
-    public void Hability1()
+    public void Ability1(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
     {
-        characterBehaviour.Hability1();
+        character.Ability1(movementDirection, mousePosition, playerTransform, out canMove);
     }
-    public void Hability2()
+    public void Ability2(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
     {
-        characterBehaviour.Hability2();
+        character.Ability2(movementDirection, mousePosition, playerTransform, out canMove);
     }
-    public void EquipHability1(GameObject hability)
+    public void EquipAbility1(GameObject hability)
     {
-        characterBehaviour.EquipHability1(hability);
+        character.EquipAbility1(hability);
     }
-    public void EquipHability2(GameObject hability)
+    public void EquipAbility2(GameObject hability)
     {
-        characterBehaviour.EquipHability2(hability);
+        character.EquipAbility2(hability);
     }
-    public void UnequipHability1()
+    public void UnequipAbility1()
     {
-        characterBehaviour.UnequipHability1();
+        character.UnequipAbility1();
     }
-    public void UnequipHability2()
+    public void UnequipAbility2()
     {
-        characterBehaviour.UnequipHability1();
+        character.UnequipAbility1();
     }
     #endregion
 

@@ -4,6 +4,8 @@ public enum WeaponType
     ShooterRange,
     ShooterMelee,
 
+    TankWeapon,
+    TankMelee,
 
 }
 

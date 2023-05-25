@@ -6,13 +6,21 @@ public class MeleeeWeapon : Weapon
 {
     [SerializeField] BoxCollider weaponTrigger;
 
-    private void Awake()
+    protected override void WeaponAtackMethod()
     {
-        WeaponAtack += () => weaponTrigger.enabled = true;
-        WeaponAtacked += () => weaponTrigger.enabled = false;
+        if (weaponTrigger != null) weaponTrigger.enabled = true;
     }
+    protected override void WeaponAtackedMethod()
+    {
+        if (weaponTrigger != null) weaponTrigger.enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         print("-hp");
+    }
+    private void OnDisable()
+    {
+        weaponTrigger.enabled = false;
     }
 }
