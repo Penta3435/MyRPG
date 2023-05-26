@@ -153,7 +153,7 @@ public class ShooterHand : Hand
     }
     public override Weapon SwitchWeapon()
     {
-        if(weapon1Container.gameObject.activeSelf == true && weapon2Container.childCount != 0)
+        if(weapon1Container.gameObject.activeSelf == true && weapon2Container.childCount == 1)
         { 
             weapon1Container.gameObject.SetActive(false);
             weapon2Container.gameObject.SetActive(true);
@@ -161,7 +161,7 @@ public class ShooterHand : Hand
 
             currentWeapon = weapon2;
         }
-        else if (weapon2Container.gameObject.activeSelf == true && weapon1Container.childCount != 0)
+        else if (weapon2Container.gameObject.activeSelf == true && weapon1Container.childCount == 1)
         {
             weapon1Container.gameObject.SetActive(true);
             weapon2Container.gameObject.SetActive(false);
@@ -169,7 +169,7 @@ public class ShooterHand : Hand
 
             currentWeapon = weapon1;
         }
-        else if (meleeWeaponContainer.gameObject.activeSelf == true && weapon1Container.childCount != 0)
+        else if (meleeWeaponContainer.gameObject.activeSelf == true && weapon1Container.childCount == 1)
         {
             weapon1Container.gameObject.SetActive(true);
             weapon2Container.gameObject.SetActive(false);
@@ -177,7 +177,7 @@ public class ShooterHand : Hand
 
             currentWeapon = weapon1;
         }
-        else if (meleeWeaponContainer.gameObject.activeSelf == true && weapon2Container.childCount != 0)
+        else if (meleeWeaponContainer.gameObject.activeSelf == true && weapon2Container.childCount == 1)
         {
             weapon1Container.gameObject.SetActive(false);
             weapon2Container.gameObject.SetActive(true);

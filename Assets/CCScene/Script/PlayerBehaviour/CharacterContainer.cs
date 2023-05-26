@@ -2,22 +2,20 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 
-public class CharacterContainerBehaviour : MonoBehaviour
+public class CharacterContainer : MonoBehaviour
 {
-    public Character character;
-
-    GameObject characterCanvas;
+    public Character character;//public for hand
 
     #region character_container_behavour
     //character
-    public void EquipCharacter(GameObject character, Transform CharacterUICanvas)
+    public virtual void EquipCharacter(GameObject character, Transform CharacterUICanvas)
     {
         //destroy all children
         transform.DestroyAllChildren();
 
         //instantiate character
-        this.character = Instantiate(character, transform).GetComponent<Character>();
-
+        GameObject characterInstance = Instantiate(character, transform);
+        this.character = characterInstance.GetComponent<Character>();
         this.character.CharacterUIParent = CharacterUICanvas;
         this.character.gameObject.SetActive(true);
     }
@@ -60,22 +58,6 @@ public class CharacterContainerBehaviour : MonoBehaviour
     public void Ability2(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
     {
         character.Ability2(movementDirection, mousePosition, playerTransform, out canMove);
-    }
-    public void EquipAbility1(GameObject hability)
-    {
-        character.EquipAbility1(hability);
-    }
-    public void EquipAbility2(GameObject hability)
-    {
-        character.EquipAbility2(hability);
-    }
-    public void UnequipAbility1()
-    {
-        character.UnequipAbility1();
-    }
-    public void UnequipAbility2()
-    {
-        character.UnequipAbility1();
     }
     #endregion
 

@@ -11,11 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CharacterController cc;
     [SerializeField] PlayerInput pInput;
 
-    [SerializeField] CharacterContainerBehaviour mainCharacterBehaviour;
-    [SerializeField] CharacterContainerBehaviour companionBehaviour;
-
-    [SerializeField] Transform mainCharacterContainer;
-    [SerializeField] Transform companionContainer;
+    [SerializeField] MainCharacterContainer mainCharacterContainer;
+    [SerializeField] CharacterContainer companionContainer;
 
     //UI
     [SerializeField] Transform canvasForCharacters;
@@ -24,12 +21,11 @@ public class PlayerController : MonoBehaviour
     //internal properties
     private Vector3 movementDirection;
     private Vector3 mouseWorldPosition;
-
-    private bool canMove;
+    private bool canMove = true;
 
     private InputActionAsset iActionAsset;
 
-    private CharacterContainerBehaviour currentCharacterContainerBehaviour;
+    private CharacterContainer currentCharacterContainerBehaviour;
 
 
     private void OnEnable()
@@ -40,12 +36,13 @@ public class PlayerController : MonoBehaviour
         iActionAsset.FindActionMap("PlayerRunning").FindAction("EquipMelee").started += SwitchToMelee;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started += Atack;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("Ability1").started += Ability1;
+        iActionAsset.FindActionMap("PlayerRunning").FindAction("Ability2").started += Ability2;
 
     }
     private void Start()
     {
         SetupMainCharacter();
-        currentCharacterContainerBehaviour = mainCharacterBehaviour;
+        currentCharacterContainerBehaviour = mainCharacterContainer;
         mainCharacterContainer.gameObject.SetActive(true);
         companionContainer.gameObject.SetActive(false);
     }
@@ -73,6 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 mousePosition = iActionAsset.FindActionMap("PlayerRunning").FindAction("MousePosition").ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        mainCharacterContainer.character = currentCharacterContainerBehaviour.character;
         Plane weaponHightPlane = new Plane(Vector3.up, new Vector3(0, currentCharacterContainerBehaviour.character.Hand.position.y, 0));
         if (weaponHightPlane.Raycast(ray, out float rayDistance))
         {
@@ -83,21 +81,21 @@ public class PlayerController : MonoBehaviour
     }
     void ChangeCharacters(InputAction.CallbackContext ctx)
     {
-        if(ctx.started && companionContainer.childCount == 1)
+        if(ctx.started && companionContainer.transform.childCount == 1)
         {
             if (mainCharacterContainer.gameObject.activeSelf == true)
             {
                 mainCharacterContainer.gameObject.SetActive(false);
                 companionContainer.gameObject.SetActive(true);
 
-                currentCharacterContainerBehaviour = companionBehaviour;
+                currentCharacterContainerBehaviour = companionContainer;
             }
             else
             {
                 mainCharacterContainer.gameObject.SetActive(true);
                 companionContainer.gameObject.SetActive(false);
 
-                currentCharacterContainerBehaviour = mainCharacterBehaviour;
+                currentCharacterContainerBehaviour = mainCharacterContainer;
             }
         }
     }
@@ -107,13 +105,13 @@ public class PlayerController : MonoBehaviour
     #region Character_Behaviour
     void SetupMainCharacter()
     {
-        mainCharacterBehaviour.EquipCharacter(mainCharacterPrefab, canvasForCharacters);
+        mainCharacterContainer.EquipCharacter(mainCharacterPrefab, canvasForCharacters);
     }
 
     //public for test
     public void EquipCharacter(GameObject character)
     {
-        companionBehaviour.EquipCharacter(character, canvasForCharacters);
+        companionContainer.EquipCharacter(character, canvasForCharacters);
     }
     void UnequipCharacter()
     {
@@ -156,17 +154,18 @@ public class PlayerController : MonoBehaviour
     {
         currentCharacterContainerBehaviour.Ability1(movementDirection, mouseWorldPosition, transform, out canMove);
     }
-    void Ability2()
+    void Ability2(InputAction.CallbackContext ctx)
     {
-
+        currentCharacterContainerBehaviour.Ability2(movementDirection, mouseWorldPosition, transform, out canMove);
     }
+        //public for test
     public void EquipAbility1(GameObject ability)
     {
-        mainCharacterBehaviour.EquipAbility1(ability);
+        mainCharacterContainer.EquipAbility1(ability);
     }
-    void EquipAbility2(GameObject ability)
+    public void EquipAbility2(GameObject ability)
     {
-        mainCharacterBehaviour.EquipAbility2(ability);
+        mainCharacterContainer.EquipAbility2(ability);
     }
     #endregion
 

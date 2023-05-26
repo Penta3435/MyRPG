@@ -92,19 +92,19 @@ public class TankHand : Hand
     }
     public override Weapon SwitchWeapon()
     {
-        if (weapon1Container.gameObject.activeSelf == true)
-        {
-            weapon1Container.gameObject.SetActive(false);
-            meleeWeaponContainer.gameObject.SetActive(true);
-
-            currentWeapon = meleeWeapon;
-        }
-        else
+        if (meleeWeaponContainer.gameObject.activeSelf == true && weapon1Container.transform.childCount == 1)
         {
             weapon1Container.gameObject.SetActive(true);
             meleeWeaponContainer.gameObject.SetActive(false);
 
             currentWeapon = weapon1;
+        }
+        else
+        {
+            weapon1Container.gameObject.SetActive(false);
+            meleeWeaponContainer.gameObject.SetActive(true);
+
+            currentWeapon = meleeWeapon;
         }
         UpdateUI();
         return currentWeapon;
