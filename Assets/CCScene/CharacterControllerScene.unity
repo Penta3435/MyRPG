@@ -2142,11 +2142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  mainCharacterPrefab: {fileID: 6641686248800257372, guid: 37e29f2ec89f97644bbaa314940efc68, type: 3}
+  mainCharacterPrefab: {fileID: 6641686248800257372, guid: 2c7a3ed6984d5fd40abb9469f6fe2888, type: 3}
   cc: {fileID: 1127695687}
   pInput: {fileID: 1127695686}
-  mainCharacterContainer: {fileID: 433305509}
-  companionContainer: {fileID: 1888342175}
+  mainCharacterContainer: {fileID: 433305510}
+  companionContainer: {fileID: 1888342176}
   canvasForCharacters: {fileID: 204604907}
 --- !u!114 &1127695686
 MonoBehaviour:
@@ -3954,6 +3954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1888342175}
+  - component: {fileID: 1888342176}
   m_Layer: 0
   m_Name: -Character2-
   m_TagString: Untagged
@@ -3976,6 +3977,19 @@ Transform:
   m_Father: {fileID: 1127695688}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1888342176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888342174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfaba35427235f24c80fd9ca0e3c1ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
 --- !u!1 &2019523252
 GameObject:
   m_ObjectHideFlags: 0
