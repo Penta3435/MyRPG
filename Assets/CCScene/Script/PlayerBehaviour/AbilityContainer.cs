@@ -5,9 +5,8 @@ using UnityEngine;
 public class AbilityContainer : MonoBehaviour
 {
     protected Ability ability;
-    public virtual void UseAbility(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove) 
+    public virtual void UseAbility(Vector3 movementDirection, Vector3 mousePosition, PlayerController playerController) 
     {
-        if (transform.childCount == 1) ability.AbilityAction(movementDirection, mousePosition, playerTransform, out canMove);
-        else { canMove = true; }
+        if (transform.childCount == 1) ability.AbilityAction(movementDirection, mousePosition, playerController);
     }
 }

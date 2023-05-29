@@ -1,12 +1,32 @@
+using System.Threading;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Dash : Ability
 {
-    public override void AbilityAction(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
+    [SerializeField] GameObject particle;
+
+    Vector3 playerUseAbilityPosition;
+    public override void AbilityAction(Vector3 movementDirection, Vector3 mousePosition, PlayerController playerController)
     {
-        canMove = true;
-        print("dashing!");
+        playerUseAbilityPosition = playerController.transform.position;
+        StartCoroutine(DashAction(mousePosition, playerController));
+    }
+
+    float time;
+    IEnumerator DashAction(Vector3 mousePosition, PlayerController playerController)
+    {
+        var particleGameObject = Instantiate(particle, transform);
+        playerController.canMove = false;
+        while (time <= 0.2f) 
+        {
+            time += Time.deltaTime;
+            playerController.transform.position += (mousePosition - playerUseAbilityPosition).ZeroY().normalized * 60 * Time.deltaTime;
+            yield return null; 
+        }
+        time = 0;
+        playerController.canMove = true;
+        Destroy(particleGameObject);
     }
 }

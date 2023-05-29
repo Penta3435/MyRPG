@@ -18,10 +18,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform canvasForCharacters;
 
 
+
+    public bool canMove;
     //internal properties
     private Vector3 movementDirection;
     private Vector3 mouseWorldPosition;
-    private bool canMove = true;
 
     private InputActionAsset iActionAsset;
 
@@ -35,8 +36,8 @@ public class PlayerController : MonoBehaviour
         iActionAsset.FindActionMap("PlayerRunning").FindAction("SwitchWeapons").started += SwitchWeapon;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("EquipMelee").started += SwitchToMelee;
         iActionAsset.FindActionMap("PlayerRunning").FindAction("Atack").started += Atack;
-        iActionAsset.FindActionMap("PlayerRunning").FindAction("Ability1").started += Ability1;
-        iActionAsset.FindActionMap("PlayerRunning").FindAction("Ability2").started += Ability2;
+        //iActionAsset.FindActionMap("PlayerRunning").FindAction("Ability1").started += Ability1;
+        //iActionAsset.FindActionMap("PlayerRunning").FindAction("Ability2").started += Ability2;
 
     }
     private void Start()
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour
     #region Update_Behaviours
     void Update()
     {
-        PlayerMovement();
+        if (canMove) PlayerMovement();
     }
     private void LateUpdate()
     {
@@ -150,13 +151,13 @@ public class PlayerController : MonoBehaviour
 
 
     //hability
-    void Ability1(InputAction.CallbackContext ctx)
+    public void Ability1(InputAction.CallbackContext ctx)
     {
-        currentCharacterContainerBehaviour.Ability1(movementDirection, mouseWorldPosition, transform, out canMove);
+        if (ctx.performed) currentCharacterContainerBehaviour.Ability1(movementDirection, mouseWorldPosition, this);
     }
-    void Ability2(InputAction.CallbackContext ctx)
+    public void Ability2(InputAction.CallbackContext ctx)
     {
-        currentCharacterContainerBehaviour.Ability2(movementDirection, mouseWorldPosition, transform, out canMove);
+        if (ctx.performed) currentCharacterContainerBehaviour.Ability2(movementDirection, mouseWorldPosition, this);
     }
         //public for test
     public void EquipAbility1(GameObject ability)

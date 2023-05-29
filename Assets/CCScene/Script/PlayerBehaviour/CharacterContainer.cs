@@ -51,13 +51,13 @@ public class CharacterContainer : MonoBehaviour
     }
 
     //hability
-    public void Ability1(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
+    public void Ability1(Vector3 movementDirection, Vector3 mousePosition, PlayerController playerController)
     {
-        character.Ability1(movementDirection, mousePosition, playerTransform, out canMove);
+        character.Ability1(movementDirection, mousePosition, playerController);
     }
-    public void Ability2(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
+    public void Ability2(Vector3 movementDirection, Vector3 mousePosition, PlayerController playerController)
     {
-        character.Ability2(movementDirection, mousePosition, playerTransform, out canMove);
+        character.Ability2(movementDirection, mousePosition, playerController);
     }
     #endregion
 

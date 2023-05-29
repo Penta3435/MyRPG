@@ -10,4 +10,8 @@ public static class ExtensionMethods{
             }
         }
     }
+    public static Vector3 ZeroY(this Vector3 vector3)
+    {
+        return new Vector3(vector3.x, 0, vector3.z);
+    }
 }

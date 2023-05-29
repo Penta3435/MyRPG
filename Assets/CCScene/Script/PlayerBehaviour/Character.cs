@@ -46,20 +46,26 @@ public class Character : MonoBehaviour
     }
     public virtual void SwitchWeapon()
     {
-        animator.SetTrigger("Idle");
-        Weapon equipedWeapon = rightHandBehaviour.SwitchWeapon();
-        animator.runtimeAnimatorController = equipedWeapon.AnimatorController;
+        Weapon equipedWeapon = rightHandBehaviour.SwitchWeapon(out bool switched);
+        if (switched)
+        {
+            animator.SetTrigger("Idle");
+            animator.runtimeAnimatorController = equipedWeapon.AnimatorController;
+        }
     }
     public virtual void SwitchToMelee()
     {
-        animator.SetTrigger("Idle");
-        Weapon equipedWeapon = rightHandBehaviour.UseWeapon(WeaponContainer.MeleeWeaponContainer);
-        animator.runtimeAnimatorController = equipedWeapon.AnimatorController;
+        Weapon equipedWeapon = rightHandBehaviour.UseWeapon(WeaponContainer.MeleeWeaponContainer, out bool used);
+        if (used) 
+        { 
+            animator.SetTrigger("Idle");
+            animator.runtimeAnimatorController = equipedWeapon.AnimatorController;
+        }
     }
     public virtual void EquipWeapon(GameObject weapon)
     {
-        var weaponComponent = rightHandBehaviour.EquipWeapon(weapon);
-        if (weaponComponent != null) animator.runtimeAnimatorController = weaponComponent.AnimatorController;
+        var weaponComponent = rightHandBehaviour.EquipWeapon(weapon, out bool equiped);
+        if (equiped) animator.runtimeAnimatorController = weaponComponent.AnimatorController;
     }
     public virtual void UnEquipWeapons(WeaponContainer weaponContainer)
     {
@@ -67,14 +73,13 @@ public class Character : MonoBehaviour
     }
 
     //hability
-    public virtual void Ability1(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
+    public virtual void Ability1(Vector3 movementDirection, Vector3 mousePosition, PlayerController playerController)
     {
-        ability1ContainerBehaviour.UseAbility(movementDirection, mousePosition, playerTransform, out canMove);
+        ability1ContainerBehaviour.UseAbility(movementDirection, mousePosition, playerController);
     }
-    public virtual void Ability2(Vector3 movementDirection, Vector3 mousePosition, Transform playerTransform, out bool canMove)
+    public virtual void Ability2(Vector3 movementDirection, Vector3 mousePosition, PlayerController playerController)
     {
-        canMove = true;
-        ability2ContainerBehaviour?.UseAbility(movementDirection, mousePosition, playerTransform, out canMove);
+        ability2ContainerBehaviour?.UseAbility(movementDirection, mousePosition, playerController);
     }
     
 

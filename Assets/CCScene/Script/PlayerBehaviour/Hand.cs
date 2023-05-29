@@ -15,10 +15,10 @@ public abstract class Hand : MonoBehaviour
     public virtual void WeaponAtack() {  }
     public virtual void WeaponAtacking() {  }
     public virtual void WeaponAtacked() {  }
-    public abstract Weapon EquipWeapon(GameObject weapon);
+    public abstract Weapon EquipWeapon(GameObject weapon, out bool used);
     public abstract void UnequipWeapon(WeaponContainer weaponContainer);
-    public abstract Weapon UseWeapon(WeaponContainer weaponContainer);
-    public abstract Weapon SwitchWeapon();
+    public abstract Weapon UseWeapon(WeaponContainer weaponContainer, out bool used);
+    public abstract Weapon SwitchWeapon( out bool switched);
     protected abstract void UpdateUI();
 
     protected void OnEnable()
